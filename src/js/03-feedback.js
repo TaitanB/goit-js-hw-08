@@ -15,19 +15,27 @@ formInputText();
 
 function onInputData(e) {
   userData[e.target.name] = e.target.value;
-  //   console.log(`userData: `, userData);
+  // console.log(`userData: `, userData);
 
   localStorage.setItem('feedback-form-state', JSON.stringify(userData));
-  //   console.log(`localStorage: `, localStorage);
+  // console.log(`localStorage: `, localStorage);
 }
 
 function formInputText() {
   saveData = JSON.parse(localStorage.getItem('feedback-form-state'));
-  //   console.log(`dataGet: `, saveData);
-  if (saveData) {
+  // console.log(`dataGet: `, saveData);
+
+  if (saveData?.email) {
     refs.input.value = saveData.email;
-    refs.textarea.value = saveData.message;
+    // console.log(`dataGet.email: `, saveData.email);
   }
+  if (saveData?.message) {
+    refs.textarea.value = saveData.message;
+    // console.log(`dataGet.message: `, saveData.message);
+  }
+  userData = { ...saveData };
+
+  // console.log(`userData if: `, userData);
 }
 
 function onSubmitBtn(e) {
@@ -38,13 +46,11 @@ function onSubmitBtn(e) {
   });
   if (refs.input.value < 1 || refs.textarea.value < 1) {
     window.alert('Bсі поля повинні бути заповнені!');
-  } else if (saveData !== null) {
-    console.log(saveData);
   } else if (userData !== null) {
     console.log(userData);
   }
 
   refs.form.reset();
 
-  localStorage.clear('feedback-form-state');
+  localStorage.removeItem('feedback-form-state');
 }
