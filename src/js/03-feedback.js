@@ -9,6 +9,7 @@ const refs = {
 refs.form.addEventListener('input', throttle(onInputData, 500));
 refs.form.addEventListener('submit', onSubmitBtn);
 
+const STORAGE_KEY = 'feedback-form-state';
 let userData = {};
 let saveData = {};
 formInputText();
@@ -17,12 +18,12 @@ function onInputData(e) {
   userData[e.target.name] = e.target.value;
   // console.log(`userData: `, userData);
 
-  localStorage.setItem('feedback-form-state', JSON.stringify(userData));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
   // console.log(`localStorage: `, localStorage);
 }
 
 function formInputText() {
-  saveData = JSON.parse(localStorage.getItem('feedback-form-state'));
+  saveData = JSON.parse(localStorage.getItem(STORAGE_KEY));
   // console.log(`dataGet: `, saveData);
 
   if (saveData?.email) {
@@ -52,5 +53,5 @@ function onSubmitBtn(e) {
 
   refs.form.reset();
 
-  localStorage.removeItem('feedback-form-state');
+  localStorage.removeItem(STORAGE_KEY);
 }
